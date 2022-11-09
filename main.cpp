@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string.h>
-
-#include "bus.h"
-#include "ticket.h"
+#include<windows.h>
+#include "bus.cpp"
+#include "ticket.cpp"
 #include "utils.h"
-
+#include "node.cpp"
 using namespace std;
 
 // GLOBAL FUNCTION
@@ -14,15 +14,21 @@ void adminMenu();
 void adminLogin();
 void viewBookingsMenu();
 void welcomeScreen();
-
+void fullscreen()
+{
+keybd_event(VK_MENU,0x38,0,0);
+keybd_event(VK_RETURN,0x1c,0,0);
+keybd_event(VK_RETURN,0x1c,KEYEVENTF_KEYUP,0);
+keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);
+}
 // MAIN FUNCTION
 int main()
 {
     system("cls");
     system("COLOR 0f");
-
+	fullscreen();
     welcomeScreen();
-
+	
     return 0;
 }
 
@@ -40,11 +46,6 @@ void welcomeScreen()
     cout << "\t\t\t\t\t\t\t\t\t\t||                    PROJECT                 ||\n";
     cout << "\t\t\t\t\t\t\t\t\t\t================================================\n\n\n";
 
-    cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t\t\t  Developed By:-                             \t\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t\t\t                                             \t\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t\t\t  NIKHIL RAJPUT                              \t\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n\n";
 
     system("pause");
     mainMenu();
@@ -189,7 +190,10 @@ void adminMenu()
 {
     Bus b;
     Ticket t;
-
+    node* p;
+    node* q;
+    list l;
+	Tao(l);
     int choice;
 
     while (1)
@@ -227,7 +231,7 @@ void adminMenu()
         switch (choice)
         {
         case 1:
-            b.addBus();
+            NodeBus(l,b);
             system("pause");
             break;
 
@@ -274,7 +278,18 @@ void adminMenu()
             system("cls");
             mainMenu();
             break;
-
+//		case 11:
+//			system("cls");
+//			if(l.head==NULL){
+//				cout<<"\t\t\t\t\t\t\t\t\t\tDon't have bus "<<endl;
+//			}else{
+//				for(p=l.head;p=p->next;p!=NULL){
+//					p->data.showBusDetails();
+//				}
+//			}
+//			
+//			system("pause");
+//			break;
         default:
             cout << "\n\t\t\t\t\t  Choose valid option!!! \t\t\t\n";
             system("pause");
