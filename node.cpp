@@ -1,44 +1,59 @@
 #include<iostream>
-//#include"bus.cpp"
 #include"node.h"
 #include <string>
 #include <cstring>
 #include <fstream>
-#include <iomanip>
-#include <cstdlib>
 using namespace std;
-
-node* CreateNode(Bus x){
-	node* p;
-	p=new node;
-	p->data=x;
-	p->next=NULL;
-	return p;
-}
-
-
-void Last(list &l,node* x){
-	if(l.head==NULL){
-		l.head=l.tail=x;
+void ListBus::Last(NodeBus* x){
+	if(head==NULL){
+		head=x;
 	}
 	else{
-		l.tail->next=x;
-		l.tail=x;
+		NodeBus* p=new NodeBus();
+		p=head;
+		while(1){
+			if(p->GetNext()==NULL){
+				p->SetNext(x);
+				break;
+			}
+			
+			p=p->GetNext();
+		}
 	}
 }
 
-
-void NodeBus(list &y,Bus b){
-	node* q;
-	
+void ListBus::addBus(){
+	Bus b;
 	b.addBus();
-	q=new node;
-    q=CreateNode(b);
-    Last(y,q);
-    free(q);
-	
-
-//    cout << "\n\t\t\t\t\t\t\t\t\t\tBus Added Successfully...!!! \n";	
+	NodeBus* d;
+	d=new NodeBus(b);
+	this->Last(d);
 }
 
+void ListBus::ReadFileBus(){
+	fstream f;
+	NodeBus* d;
+	Bus e;
+	f.open("buses.txt",ios::in);
+	f.read(reinterpret_cast<char*>(&e),sizeof(Bus));
+	if(!f){
+		cout<<"File khong ton tai"<<endl;
+	}
+	while(!f.eof()){
+		
+		d=new NodeBus(e);
+		this->Last(d);
+		f.read(reinterpret_cast<char*>(&e), sizeof(Bus));
+	}
+	f.close();
+}
 
+void ListBus::showAllBus(){
+	system("cls");
+	NodeBus* p=new NodeBus();
+	p=this->head;
+	while(p!=NULL){
+		p->z.showBusDetails();
+		p=p->GetNext();
+	}
+}

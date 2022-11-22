@@ -2,36 +2,71 @@
 #define NODE_H
 #include<iostream>
 #include"bus.h"
-
+#include<fstream>
+#include"utils.h"
 using namespace std;
 
-struct Node{
-	Bus data;
-	Node* next;
-}typedef node;
-
-
-struct List{
-	Node* head;
-	Node* tail;
-}typedef list;
-
-
-void Tao(struct List &l){
-	l.head=NULL;
-	l.tail=NULL;
-}
-class ListBus:public Bus{
-	protected:
-		node x;
-		list y;
+class NodeBus:public Bus{
+	private:
 		Bus z;
+		NodeBus* nextbus;
 	public:
-		node* CreateNode(Bus z);//TAO NODE 
-		void Last(list &y,node* x);//THEM NODE VAO CUOI
-		void NodeBus(list &y);
-//		void showAllBus(list &l);
+		NodeBus(){
+			this->z=Bus();
+			this->nextbus=NULL;
+		}
+		NodeBus(Bus z){
+			this->z=z;
+			this->nextbus=NULL;
+		}
+		Bus dataBus(){
+			return z;
+		}
+		NodeBus* GetNext(){
+			return nextbus;
+		}
+		void SetNext(NodeBus* nextbus){
+			this->nextbus=nextbus;
+		}
+		void SetNext(){
+			this->nextbus=NULL;
+		}
+		NodeBus* MakeNode(Bus z){
+			NodeBus* p=new NodeBus();
+			p->z=z;
+			p->nextbus=NULL;
+			return p;
+		}
+		friend class ListBus;
 };
 
+class ListBus{
+	private:
+		NodeBus* head;
+	public:
+		ListBus(){
+			this->head= NULL;
+		}
+		~ListBus(){
+			NodeBus* p=new NodeBus();
+			p=head;
+			while(p!=NULL){
+				NodeBus* q=new NodeBus();
+				q=p;
+				delete q;
+				p=p->nextbus;
+			}
+		}
+		void sethead(NodeBus* head){
+			this->head =head;
+		}
+		void Create(){
+			this->head=NULL;
+		}
+		void Last(NodeBus* x);
+		void ReadFileBus();
+		void addBus();
+		void showAllBus();
+};
 
 #endif //NODE_H
