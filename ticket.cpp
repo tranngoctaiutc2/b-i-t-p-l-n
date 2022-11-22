@@ -3,7 +3,8 @@
 #include <cstring>
 #include <fstream>
 #include <iomanip>
-
+#include <windows.h>
+#include "support.h"
 #include "ticket.h"
 #include "bus.h"
 #include "utils.h"
@@ -22,20 +23,54 @@ void Ticket::generateTicket(char *n, Bus b)
 // DISPLAY TICKET DETAILS
 void Ticket::displayTicket()
 {
-    cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t Name:-> " << getName();
-    cout << "\n\t\t\t\t\t\t\t\t\t\t PNR No:-> " << getPnrNo();
-    cout << "\n\t\t\t\t\t\t\t\t\t\t Bus No:-> " << bus.getBusNo();
-    cout << "\n\t\t\t\t\t\t\t\t\t\t Seat No.:-> " << bus.getBookedSeats();
-    cout << "\n\t\t\t\t\t\t\t\t\t\t Date:-> " << getDate();
-    cout << "\n\t\t\t\t\t\t\t\t\t\t From:-> " << bus.getSource();
-    cout << "\n\t\t\t\t\t\t\t\t\t\t To:-> " << bus.getDestination();
-    cout << "\n\t\t\t\t\t\t\t\t\t\t Source Time:-> " << bus.getSourceTime();
-    cout << "\n\t\t\t\t\t\t\t\t\t\t Destination Time:-> " << bus.getDestinationTime();
+	setColor(5,6);
+    gotoxy(10,6);
+	setColor(3,4);    
+    cout << " TEN HANH KHACH:-> " << getName();
+    setColor(5,6);
+    gotoxy(10,7); 
+	setColor(3,4);   
+    cout << " MA VE PNR :-> " << getPnrNo();
+    setColor(5,6);
+    gotoxy(10,8);
+	setColor(3,4);    
+    cout << " SO XE:-> " << bus.getBusNo();
+    setColor(5,6);
+    gotoxy(10,9);  
+	setColor(3,4); 
+    cout << " CHO NGOI:-> " << bus.getBookedSeats();
+    setColor(5,6);
+    gotoxy(10,10);
+    setColor(3,4);
+    cout << " NGAY DAT VE:-> " << getDate();
+    setColor(5,6);
+    gotoxy(10,11);
+    setColor(3,4);
+    cout << " DIEM DI:-> " << bus.getSource();
+    setColor(5,6);
+    gotoxy(10,12);
+    setColor(3,4);
+    cout << " DIEM DEN:-> " << bus.getDestination();
+    setColor(5,6);
+    gotoxy(10,13);
+    setColor(3,4);
+    cout << " THOI GIAN XUAT PHAT:-> " << bus.getSourceTime();
+    setColor(5,6);
+    gotoxy(10,14);
+    setColor(3,4);
+    cout << " THOI GIAN DU KIEN DEN:-> " << bus.getDestinationTime();
+    setColor(5,6);
     cout << fixed << setprecision(2);
-    cout << "\n\t\t\t\t\t\t\t\t\t\t Bus Fare:-> " << bus.getBusFare();
-    cout << "\n\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-    cout << "\n";
+    gotoxy(10,15);
+    setColor(3,4);
+    cout << " GIA VE:-> " << bus.getBusFare();
+    setColor(5,6);
+    gotoxy(10,16);
+    cout << "-------------------------------------------------";
+    cout <<endl;
+    _getch();
+    setColor(0,7);
+    
 }
 
 // BOOK TICKET
@@ -48,26 +83,54 @@ void Ticket::bookTicket()
 
     Bus b;
     fstream busFileStream, ticketFileStream, tempFileStream;
+	setColor(3,4);
+    gotoxy(10,1);
+         cout<< "-------------------------------------------------";
+         gotoxy(10,2);
+         cout<< "||                 VE XE                       ||"; 
+         gotoxy(10,3);
+         cout<< "||                                             ||";
+         gotoxy(10,4);
+         cout<< "-------------------------------------------------" ;
+         gotoxy(10,6);
+         setColor(0,7);
 
-    printHeading("BOOK TICKET");
-
-    busFileStream.open("buses.dat", ios::in | ios::app | ios::binary);
+    busFileStream.open("buses.txt", ios::in | ios::app);
     if (busFileStream.fail())
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tCan't Open File...!!\n";
+    	gotoxy(10,20);
+        cout << "Can't Open File...!!\n";
+        _getch();
+         setColor(0,7);
     }
 
     else
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Source:-> ";
+    	setColor(0,6);
+    	gotoxy(10,5);
+    	gotoxy(10,5);
+        cout << "DIEM DI:-> ";
         cin.ignore();
         cin.getline(from, 20);
-        cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Destination:-> ";
+        gotoxy(10,6);
+        gotoxy(10,6);
+        cout << "DIEM DEN:-> ";
         cin.getline(to, 20);
+        setColor(0,7);
+    
 
         system("cls");
-        printHeading("AVAILABLE BUSES");
-
+        setColor(3,4);
+        gotoxy(10,1);
+         cout<< "-------------------------------------------------";
+         gotoxy(10,2);
+         cout<< "||                 DANH SACH XE                ||"; 
+         gotoxy(10,3);
+         cout<< "||                                             ||";
+         gotoxy(10,4);
+         cout<< "-------------------------------------------------" ;
+         gotoxy(10,6);
+		 setColor(0,6);
         busFileStream.read((char *)&b, sizeof(b));
         while (!busFileStream.eof())
         {
@@ -83,18 +146,24 @@ void Ticket::bookTicket()
 
         if (chk == 0)
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t\tNo Buses Found...!!\n";
+        	gotoxy(10,10);
+            cout << "KHONG TIM THAY...!!\n";
+            _getch();
+             setColor(0,7);
         }
         else
         {
             char bNo[10];
             int booked = 0;
-
-            cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Bus Number:-> ";
+            setColor(5,6);
+            gotoxy(10,15);
+            gotoxy(10,15);
+			cout << "NHAP SO XE:-> ";
             cin.getline(bNo, 10);
+            setColor(0,7);
 
-            busFileStream.open("buses.dat", ios::in | ios::app | ios::binary);
-            tempFileStream.open("temp.dat", ios::out | ios::app | ios::binary);
+            busFileStream.open("buses.txt", ios::in | ios::app);
+            tempFileStream.open("temp.txt", ios::out | ios::app);
 
             busFileStream.read((char *)&b, sizeof(b));
             while (!busFileStream.eof())
@@ -103,28 +172,53 @@ void Ticket::bookTicket()
                 {
                     if (b.getBookedSeats() >= 32)
                     {
-                        cout << "\n\t\t\t\t\t\t\t\t\t\tSeat not available...!!\n";
+                    	gotoxy(10,20);
+                        cout << "khong co cho ngoi...!!\n";
                         break;
                     }
                     else
                     {
                         system("cls");
-                        printHeading("BOOK TICKET");
+                        setColor(3,4);
+                        gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||                   VE XE                     ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+						setColor(0,6);
                         char n[20];
-                        cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Customer Name :-> ";
+                        
+                        gotoxy(10,6);
+                        gotoxy(10,6);
+                        cout << "NHAP TEN KHACH HANG :-> ";
                         cin.getline(n, 20);
                         b.setBookedSeats();
                         generateTicket(n, b);
-                        ticketFileStream.open("tickets.dat", ios::out | ios::app | ios::binary);
+                        ticketFileStream.open("tickets.txt", ios::out | ios::app);
                         ticketFileStream.write((char *)this, sizeof(*this));
                         ticketFileStream.close();
                         tempFileStream.write((char *)&b, sizeof(b));
 
                         booked = 1;
                         system("cls");
-                        printHeading("BOOKING DETAILS");
+                        setColor(3,4);
+                          gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||                  VE DUOC DAT                ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+						setColor(0,6);
                         displayTicket();
-                        cout << "\n\t\t\t\t\t\t\t\t\t\tTicket Booked Successfully...!!\n";
+                        gotoxy(10,20);
+                        cout << "VE DUOC DAT THANH CONG...!!\n";
+                        _getch();
+                        setColor(0,7);
                     }
                 }
                 else
@@ -138,8 +232,8 @@ void Ticket::bookTicket()
             {
                 busFileStream.close();
                 tempFileStream.close();
-                remove("buses.dat");
-                rename("temp.dat", "buses.dat");
+                remove("buses.txt");
+                rename("temp.txt", "buses.txt");
             }
         }
         busFileStream.close();
@@ -155,18 +249,32 @@ void Ticket::cancelTicket()
     int chk = 0;
 
     fstream busFileStream, ticketFileStream, tempFileStream, busTempFileStream;
-
-    printHeading("CANCEL TICKET");
-    cout << "\n\t\t\t\t\t\t\t\t\t\tEnter PNR Number:-> ";
+    
+					setColor(3,4);
+                   gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||                  VE XE                      ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+                    gotoxy(10,6);
+                    setColor(5,6);
+    cout << "NHAP MA VE PNR:->";
     cin.ignore();
+    setColor(3,4);
     cin.getline(pnr, 10);
 
-    ticketFileStream.open("tickets.dat", ios::in | ios::app | ios::binary);
-    tempFileStream.open("temp.dat", ios::out | ios::app | ios::binary);
+    ticketFileStream.open("tickets.txt", ios::in | ios::app);
+    tempFileStream.open("temp.txt", ios::out | ios::app);
 
     if (ticketFileStream.fail())
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tCan't Open File...!!\n";
+    	gotoxy(10,20);
+        cout << "Can't Open File...!!\n";
+        _getch();
+        setColor(0,7);
     }
 
     else
@@ -181,8 +289,8 @@ void Ticket::cancelTicket()
             else
             {
                 Bus b;
-                busFileStream.open("buses.dat", ios::in | ios::app | ios::binary);
-                busTempFileStream.open("bustemp.dat", ios::out | ios::app | ios::binary);
+                busFileStream.open("buses.txt", ios::in | ios::app);
+                busTempFileStream.open("bustemp.txt", ios::out | ios::app);
 
                 busFileStream.read((char *)&b, sizeof(b));
                 while (!busFileStream.eof())
@@ -200,8 +308,8 @@ void Ticket::cancelTicket()
                 }
                 busFileStream.close();
                 busTempFileStream.close();
-                remove("buses.dat");
-                rename("bustemp.dat", "buses.dat");
+                remove("buses.txt");
+                rename("bustemp.txt", "buses.txt");
                 chk = 1;
             }
             ticketFileStream.read((char *)this, sizeof(*this));
@@ -210,15 +318,21 @@ void Ticket::cancelTicket()
         {
             ticketFileStream.close();
             tempFileStream.close();
-            cout << "\n\t\t\t\t\t\t\t\t\t\tTicket Not Found...!!\n";
+            gotoxy(10,20);
+            cout << "KHONG TIM THAY...!!\n";
+            _getch();
+            setColor(0,7);
         }
         else
         {
             ticketFileStream.close();
             tempFileStream.close();
-            remove("tickets.dat");
-            rename("temp.dat", "tickets.dat");
-            cout << "\n\t\t\t\t\t\t\t\t\t\tTicket Cancelled...!!\n";
+            remove("tickets.txt");
+            rename("temp.txt", "tickets.txt");
+            gotoxy(10,20);
+            cout << "Ticket Cancelled...!!\n";
+            _getch();
+            setColor(0,7);
         }
     }
 }
@@ -232,22 +346,34 @@ void Ticket::editTicket()
     int chk = 0;
 
     fstream ticketFileStream, tempFileStream;
-
-    printHeading("EDIT TICKET");
-    cout << "\n\t\t\t\t\t\t\t\t\t\tEnter PNR Number:-> ";
+	setColor(3,4);
+   gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||                CHINH SUA VE                 ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+                    gotoxy(10,6);
+                    setColor(5,6);
+    cout << "MA VE PNR:-> ";
     cin.ignore();
+    setColor(3,4);
     cin.getline(pnr, 10);
+    setColor(0,7);
 
-    ticketFileStream.open("tickets.dat", ios::in | ios::app | ios::binary);
+    ticketFileStream.open("tickets.txt", ios::in | ios::app);
 
     if (ticketFileStream.fail())
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tCan't Open File...!!\n";
+    	gotoxy(10,20);
+        cout << "Can't Open File...!!\n";
     }
 
     else
     {
-        tempFileStream.open("temp.dat", ios::out | ios::app | ios::binary);
+        tempFileStream.open("temp.txt", ios::out | ios::app);
 
         ticketFileStream.read((char *)this, sizeof(*this));
         while (!ticketFileStream.eof())
@@ -255,11 +381,23 @@ void Ticket::editTicket()
             if (strcmp(getPnrNo(), pnr) == 0)
             {
                 system("cls");
-                printHeading("EDIT TICKET");
+                	setColor(3,4);
+                    gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||                 CHINH SUA                   ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
 
                 displayTicket();
                 char n[20];
-                cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Passenger Name :-> ";
+                setColor(5,6);
+                gotoxy(10,6);
+                gotoxy(10,6);
+                cout << "NHAP TEN HANH KHACH :-> ";
+                setColor(3,4);
                 cin.getline(n, 20);
                 setName(n);
                 tempFileStream.write((char *)this, sizeof(*this));
@@ -275,17 +413,24 @@ void Ticket::editTicket()
 
         if (chk = 1)
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t\tTicket Updated Successfully...!!\n";
+        	gotoxy(10,20);
+            cout << "CAP NHAT THONG TIN...!!\n";
+            _getch();
+            setColor(0,7);
         }
         else
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t\tTicket Not Found...!!\n";
+        	gotoxy(10,20);
+		
+            cout << "VE XE KHONG TIM DUOC...!!\n";
+            _getch();
+            setColor(0,7);
         }
 
         ticketFileStream.close();
         tempFileStream.close();
-        remove("tickets.dat");
-        rename("temp.dat", "tickets.dat");
+        remove("tickets.txt");
+        rename("temp.txt", "tickets.txt");
     }
 }
 
@@ -297,20 +442,42 @@ void Ticket::showTicketsByPNR()
     char pnr[10];
     int chk = 0;
     fstream ticketFileStream;
-
-    printHeading("SHOW BOOKINGS BY PNR");
-    cout << "\n\t\t\t\t\t\t\t\t\t\tEnter PNR Number:-> ";
+					setColor(3,4);
+                    gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||                 DANH SACH VE                ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+                    gotoxy(10,6);
+                    setColor(5,6);
+    cout << "Nhap ma ve PNR:-> ";
     cin.ignore();
+    setColor(3,4);
     cin.getline(pnr, 10);
+    setColor(0,7);
 
     system("cls");
+					setColor(3,4);
+                    gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||                 DANH SACH                   ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+                    gotoxy(10,6);
 
-    printHeading("BOOKINGS");
-
-    ticketFileStream.open("tickets.dat", ios::in | ios::app | ios::binary);
+    ticketFileStream.open("tickets.txt", ios::in | ios::app);
     if (ticketFileStream.fail())
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tCan't Open File...!!\n";
+    	gotoxy(10,20);
+        cout << "Can't Open File...!!";
+        _getch();
+        setColor(3,4);
     }
 
     else
@@ -327,7 +494,10 @@ void Ticket::showTicketsByPNR()
         }
         if (chk == 0)
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t\tNo Bookings...!!\n";
+        	gotoxy(10,20);
+            cout << "KHONG TIM THAY...!!\n";
+            _getch();
+            setColor(0,7);
         }
         ticketFileStream.close();
     }
@@ -341,20 +511,43 @@ void Ticket::showTicketsByName()
     char n[20];
     int chk = 0;
     fstream ticketFileStream;
-
-    printHeading("SHOW BOOKINGS BY NAME");
-    cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Passenger Name:-> ";
+					setColor(3,4);
+                    gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||               DANH SACH                     ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+                    gotoxy(10,6);
+                    setColor(5,6);
+                    cout << "NHAP TEN KHACH HANG:-> ";
     cin.ignore();
+    setColor(3,4);
     cin.getline(n, 20);
+    setColor(0,7);
 
     system("cls");
+	setColor(3,4);
+    gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||                 DANH SACH                   ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+                    gotoxy(10,6);
 
-    printHeading("BOOKINGS");
 
-    ticketFileStream.open("tickets.dat", ios::in | ios::app | ios::binary);
+    ticketFileStream.open("tickets.txt", ios::in | ios::app);
     if (ticketFileStream.fail())
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tCan't Open File...!!\n";
+    	gotoxy(10,20);
+        cout << "Can't Open File...!!\n";
+        _getch();
+        setColor(0,7);
     }
 
     else
@@ -371,7 +564,10 @@ void Ticket::showTicketsByName()
         }
         if (chk == 0)
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t\tNo Bookings...!!\n";
+        	gotoxy(10,20);
+            cout << "KHONG TIM THAY...!!\n";
+            _getch();
+            setColor(0,7);
         }
         ticketFileStream.close();
     }
@@ -385,20 +581,43 @@ void Ticket::showTicketsByBus()
     char bNo[10];
     int chk = 0;
     fstream ticketFileStream;
+					setColor(3,4);
+                    gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||              DANH SACH VE                   ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+                    gotoxy(10,6);
+                    setColor(5,6);
 
-    printHeading("SHOW BOOKINGS BY NAME");
-    cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Bus Number:-> ";
+    cout << "NHAP SO XE:-> ";
     cin.ignore();
+    setColor(3,4);
     cin.getline(bNo, 10);
+    setColor(0,7);
 
     system("cls");
+				setColor(3,4);
+                gotoxy(10,1);
+                cout<< "-------------------------------------------------";
+                gotoxy(10,2);
+                cout<< "||                 DANH SACH                   ||"; 
+                gotoxy(10,3);
+                cout<< "||                                             ||";
+                gotoxy(10,4);
+                cout<< "-------------------------------------------------" ;
+                gotoxy(10,6);
 
-    printHeading("BOOKINGS");
-
-    ticketFileStream.open("tickets.dat", ios::in | ios::app | ios::binary);
+    ticketFileStream.open("tickets.txt", ios::in | ios::app);
     if (ticketFileStream.fail())
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tCan't Open File...!!\n";
+    	gotoxy(10,20);
+        cout << "Can't Open File...!!\n";
+        _getch();
+        setColor(0,7);
     }
 
     else
@@ -415,7 +634,8 @@ void Ticket::showTicketsByBus()
         }
         if (chk == 0)
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t\tNo Bookings...!!\n";
+        	gotoxy(10,20);
+            cout << "KHONG TIM THAY...!!\n";
         }
         ticketFileStream.close();
     }
@@ -429,20 +649,43 @@ void Ticket::showTicketsBySource()
     char s[20];
     int chk = 0;
     fstream ticketFileStream;
+	setColor(3,4);
+   gotoxy(10,1);
+                    cout<< "-------------------------------------------------";
+                    gotoxy(10,2);
+                    cout<< "||           DANH SACH VE                      ||"; 
+                    gotoxy(10,3);
+                    cout<< "||                                             ||";
+                    gotoxy(10,4);
+                    cout<< "-------------------------------------------------" ;
+                    gotoxy(10,6);
+                    setColor(5,6);
 
-    printHeading("SHOW BOOKINGS BY SOURCE");
-    cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Source:-> ";
+    cout << "XUAT PHAT TU:-> ";
     cin.ignore();
+    setColor(3,4);
     cin.getline(s, 20);
+    setColor(0,7);
 
     system("cls");
+	setColor(3,4);
+     gotoxy(10,1);
+                cout<< "-------------------------------------------------";
+                gotoxy(10,2);
+                cout<< "||                 DANH SACH                   ||"; 
+                gotoxy(10,3);
+                cout<< "||                                             ||";
+                gotoxy(10,4);
+                cout<< "-------------------------------------------------" ;
+                gotoxy(10,6);
 
-    printHeading("BOOKINGS");
-
-    ticketFileStream.open("tickets.dat", ios::in | ios::app | ios::binary);
+    ticketFileStream.open("tickets.txt", ios::in | ios::app);
     if (ticketFileStream.fail())
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tCan't Open File...!!\n";
+    	gotoxy(10,20);
+        cout << "Can't Open File...!!\n";
+        _getch();
+        setColor(0,7);
     }
 
     else
@@ -459,7 +702,10 @@ void Ticket::showTicketsBySource()
         }
         if (chk == 0)
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t\tNo Bookings...!!\n";
+        	gotoxy(10,20);
+            cout << "KHONG TIM THAY...!!\n";
+            _getch();
+            setColor(0,7);
         }
         ticketFileStream.close();
     }
@@ -473,20 +719,42 @@ void Ticket::showTicketsByDestination()
     char d[20];
     int chk = 0;
     fstream ticketFileStream;
-
-    printHeading("SHOW BOOKINGS BY DESTINATION");
-    cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Destination:-> ";
+	setColor(3,4);
+     gotoxy(10,1);
+                cout<< "-------------------------------------------------";
+                gotoxy(10,2);
+                cout<< "||         DANH SACH VE                        ||"; 
+                gotoxy(10,3);
+                cout<< "||                                             ||";
+                gotoxy(10,4);
+                cout<< "-------------------------------------------------" ;
+                gotoxy(10,6);
+                setColor(5,6);
+    cout << "DIEM DEN:-> ";
     cin.ignore();
+    setColor(3,4);
     cin.getline(d, 20);
+    setColor(0,7);
 
     system("cls");
+	setColor(3,4);
+     gotoxy(10,1);
+                cout<< "-------------------------------------------------";
+                gotoxy(10,2);
+                cout<< "||                 DANH SACH                   ||"; 
+                gotoxy(10,3);
+                cout<< "||                                             ||";
+                gotoxy(10,4);
+                cout<< "-------------------------------------------------" ;
+                gotoxy(10,6);
 
-    printHeading("BOOKINGS");
-
-    ticketFileStream.open("tickets.dat", ios::in | ios::app | ios::binary);
+    ticketFileStream.open("tickets.txt", ios::in | ios::app);
     if (ticketFileStream.fail())
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tCan't Open File...!!\n";
+    	gotoxy(10,20);
+        cout << "Can't Open File...!!\n";
+        _getch();
+        setColor(0,7);
     }
 
     else
@@ -503,7 +771,10 @@ void Ticket::showTicketsByDestination()
         }
         if (chk == 0)
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t\tNo Bookings...!!\n";
+        	gotoxy(10,20);
+            cout << "KHONG TIM THAY...!!\n";
+            _getch();
+        setColor(0,7);
         }
         ticketFileStream.close();
     }
@@ -517,13 +788,24 @@ void Ticket::showAllTickets()
     fstream ticketFileStream;
 
     system("cls");
+	setColor(3,4);
+     gotoxy(10,1);
+                cout<< "-------------------------------------------------";
+                gotoxy(10,2);
+                cout<< "||                 DANH SACH                   ||"; 
+                gotoxy(10,3);
+                cout<< "||                                             ||";
+                gotoxy(10,4);
+                cout<< "-------------------------------------------------" ;
+                gotoxy(10,6);
 
-    printHeading("BOOKINGS");
-
-    ticketFileStream.open("tickets.dat", ios::in | ios::app | ios::binary);
+    ticketFileStream.open("tickets.txt", ios::in | ios::app);
     if (ticketFileStream.fail())
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tCan't Open File...!!\n";
+    	gotoxy(10,20);
+        cout << "Can't Open File...!!\n";
+        _getch();
+        setColor(0,7);
     }
 
     else
