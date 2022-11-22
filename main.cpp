@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
 #include<windows.h>
+#include "support.h"
 #include "bus.cpp"
 #include "ticket.cpp"
 #include "utils.h"
@@ -14,40 +15,42 @@ void adminMenu();
 void adminLogin();
 void viewBookingsMenu();
 void welcomeScreen();
-void fullscreen()
-{
-keybd_event(VK_MENU,0x38,0,0);
-keybd_event(VK_RETURN,0x1c,0,0);
-keybd_event(VK_RETURN,0x1c,KEYEVENTF_KEYUP,0);
-keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0);
-}
-// MAIN FUNCTION
+//void fullscreen();
+//MAIN FUNCTION
 int main()
 {
+	SetWindowSize(80,30);
+	SetConsoleOutputCP(65001);
     system("cls");
-    system("COLOR 0f");
-	fullscreen();
+//	fullscreen();
+	setColor(0,4);
     welcomeScreen();
-	
-    return 0;
+	return 0;
 }
+
 
 //  WELCOME SCREEN FUNCTION
 void welcomeScreen()
 {
-    system("cls");
-
-    cout << "\n\n\n\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t================================================\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t||                  WELCOME TO                ||\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t||                                            ||\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t||      BUS RESERVATION SYSTEM MANAGEMENT     ||\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t||                                            ||\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t||                    PROJECT                 ||\n";
-    cout << "\t\t\t\t\t\t\t\t\t\t================================================\n\n\n";
-
-
-    system("pause");
+	system("cls");
+	gotoxy(10,5);
+    cout << "------------------------------------------------";
+    gotoxy(10,6);
+    cout << "||                                            ||";
+    gotoxy(10,7);
+    cout << "                   CHUONG TRINH                 ";
+    gotoxy(10,8);
+    cout << "||                                            ||";
+    gotoxy(10,9);
+    cout << "                  QUAN LI NHA XE 	             ";
+    gotoxy(10,10);
+    cout << "||                                            ||";
+    gotoxy(10,11);
+    cout << "                      NHOM 20                   ";
+    gotoxy(10,12);
+    cout << "------------------------------------------------";
+    gotoxy(10,13);
+    _getch();
     mainMenu();
 }
 
@@ -59,21 +62,52 @@ void mainMenu()
     while (1)
     {
         system("cls");
+        
 
         // MENU ITEMS
-        printHeading("MAIN MENU");
-
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 1. User Menu                                    \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 2. Admin Menu                                   \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 3. EXIT                                         \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n\n";
-
-        cout << "\n\t\t\t\t\t\t\t\t\t\tEnter your choice:-> ";
-
+        setColor(3,7);
+        gotoxy(10,1);
+        cout<< "-------------------------------------------------";
+        gotoxy(10,2);
+        cout<< "||                  GIAO DIEN                  ||";
+        gotoxy(10,3);
+        cout<< "||                                             ||";
+        gotoxy(10,4);
+        cout<< "-------------------------------------------------" ;
+        setColor(5,6);
+        gotoxy(10,5);
+        gotoxy(10,7);
+        cout << "-------------------------------------------------";
+        gotoxy(10,8);
+        cout<< "                                                 ";
+        SetBGColor(0);
+        gotoxy(10,8);
+        cout << " 1. NGUOI DUNG";
+        setColor(5,6);
+        gotoxy(10,9);
+        cout << "-------------------------------------------------";
+        gotoxy(10,10);
+        cout<< "                                                 ";
+        SetBGColor(0);
+        gotoxy(10,10);
+        cout << " 2. QUAN LI";
+		setColor(5,6);                                 
+        gotoxy(10,11);
+        cout << "-------------------------------------------------";
+        gotoxy(10,12);
+        cout<< "                                                 ";
+        SetBGColor(0);
+        gotoxy(10,12);
+        cout << " 3. THOAT";
+		setColor(5,6);                                       
+        gotoxy(10,13);
+        cout << "-------------------------------------------------";
+        gotoxy(10,14);
+        setColor(5,6);
+        cout << "NHAP LUA CHON:-> ";
         cin >> choice;
+        _getch();
+        setColor(0,7);
 
         switch (choice)
         {
@@ -87,12 +121,14 @@ void mainMenu()
 
         case 3:
             system("cls");
-            cout << "\n\n\n\n\t\t\t\t\t\t\t\t\t\t  Thanks for using our project...!!! \t\t\t\n";
-            cout << "\n\n\t\t\t\t\t\t\t\t\t\t          Have a nice day...!!!      \t\t\t\n\n";
+            gotoxy(10,10);
+            cout << "Chuong trinh dong...!!! "<<endl;
+            cout << " Cam on da su dung...!!!      ";
             exit(0);
 
         default:
-            cout << "\n\n\t\t\t\t\t\t\t\t\t\t  Choose valid option!!! \t\t\t\n";
+        	gotoxy(10,10);
+            cout << " Lua chon loi!!! ";
             system("pause");
             mainMenu();
         }
@@ -103,15 +139,24 @@ void mainMenu()
 void adminLogin()
 {
     string adminUname, adminPass;
-
     system("cls");
-
-    printHeading("ADMIN LOGIN");
-
-    cout << "\n\t\t\t\t\t\t\t\t\t\tEnter AdminID:-> ";
+	gotoxy(10,1);
+	setColor(3,4);
+         cout<< "-------------------------------------------------";
+         gotoxy(10,2);
+         cout<< "||                 QUAN LI                     ||";
+         gotoxy(10,3);
+         cout<< "||                                             ||";
+         gotoxy(10,4);
+         cout<< "-------------------------------------------------" ;
+         setColor(5,6);
+     gotoxy(10,7);
+    cout << "NHAP AdminID:-> ";
     cin >> adminUname;
-    cout << "\n\t\t\t\t\t\t\t\t\t\tEnter Password:-> ";
+    gotoxy(10,8);
+    cout << "NHAP Password:-> ";
     cin >> adminPass;
+    setColor(0,7);
 
     if (adminUname == "admin" && adminPass == "pass")
     {
@@ -119,7 +164,8 @@ void adminLogin()
     }
     else
     {
-        cout << "\n\t\t\t\t\t\t\t\t\t\tUsername or Password is wrong...!!! ";
+    	 gotoxy(10,10);
+        cout << "AdminID hoac password bi sai...!!! ";
         system("pause");
         adminLogin();
     }
@@ -138,25 +184,61 @@ void userMenu()
         Ticket t;
 
         // MENU ITEMS
-        printHeading("USER MENU");
-
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 1. Book Ticket                                  \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 2. View Ticket                                  \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 3. Cancel Ticket                                \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 4. BACK                                         \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-
-        cout << "\n\t\t\t\t\t\t\t\t\t\tEnter your choice:-> ";
+         gotoxy(10,1);
+         setColor(3,4);
+         cout<< "-------------------------------------------------";
+         gotoxy(10,2);
+         cout<< "||                 NGUOI DUNG                  ||";
+         gotoxy(10,3);
+         cout<< "||                                             ||";
+         gotoxy(10,4);
+         cout<< "-------------------------------------------------" ;
+         setColor(5,6);
+        gotoxy(10,5);
+        gotoxy(10,7);
+        cout << "-------------------------------------------------";
+        gotoxy(10,8);
+        cout<< "                                                 ";
+        SetBGColor(0);
+        gotoxy(10,8);
+        cout << " 1. DAT VE";
+        setColor(5,6);
+        gotoxy(10,9);
+        cout << "-------------------------------------------------";
+        gotoxy(10,10);
+        cout<< "                                                 ";
+        SetBGColor(0);
+        gotoxy(10,10);
+        cout << " 2. XEM VE DA DAT";
+		setColor(5,6);                                 
+        gotoxy(10,11);
+        cout << "-------------------------------------------------";
+        gotoxy(10,12);
+        cout<< "                                                 ";
+        SetBGColor(0);
+        gotoxy(10,12);
+        cout << " 3. HUY VE";
+        setColor(5,6);
+        gotoxy(10,13);
+        cout << "-------------------------------------------------";
+		gotoxy(10,14);
+        cout<< "                                                 ";
+        SetBGColor(0);
+        gotoxy(10,14);
+        cout << " 4. TRO LAI";
+		setColor(5,6);                                       
+        gotoxy(10,15);
+        cout << "-------------------------------------------------";
+        gotoxy(10,16);
+        setColor(0,7);
+        cout << "Enter your choice:-> ";
 
         cin >> choice;
 
         switch (choice)
         {
         case 1:
+        	setColor(0,7);
             t.bookTicket();
             system("pause");
             break;
@@ -173,11 +255,13 @@ void userMenu()
 
         case 4:
             system("cls");
+            setColor(0,7);
             mainMenu();
             break;
 
         default:
-            cout << "\n\t\t\t\t\t  Choose valid option!!! \t\t\t\n";
+        	 gotoxy(10,10);
+            cout << "  Choose valid option!!! ";
             system("pause");
             break;
             userMenu();
@@ -190,108 +274,131 @@ void adminMenu()
 {
     Bus b;
     Ticket t;
-    node* p;
-    node* q;
-    list l;
-	Tao(l);
+	ListBus* l;
+	l=new ListBus();
     int choice;
 
     while (1)
     {
         system("cls");
+		setColor(0,6);
+        gotoxy(10,1);
+         cout<< "-------------------------------------------------";
+         gotoxy(10,2);
+         cout<< "||            GIAO DIEN QUAN LI                ||";
+         gotoxy(10,3);
+         cout<< "||                                             ||";
+         gotoxy(10,4);
+         cout<< "-------------------------------------------------" ;
+         gotoxy(10,5);
 
-        printHeading("ADMIN PORTAL");
+        cout << "-------------------------------------------------";
+        gotoxy(10,7);
+        cout << " 1. THEM XE                                      ";
+         gotoxy(10,8);
+        cout << "-------------------------------------------------";
+         gotoxy(10,9);
+        cout << " 2. DANH SACH XE                                 ";
+         gotoxy(10,10);
+        cout << "-------------------------------------------------";
+         gotoxy(10,11);
+        cout << " 3. XEM THONG TIN TUYEN XE                       ";
+         gotoxy(10,12);
+        cout << "-------------------------------------------------";
+         gotoxy(10,13);
+        cout << " 4. DIEU CHINH THONG TIN TUYEN XE                ";
+         gotoxy(10,14);
+        cout << "-------------------------------------------------";
+         gotoxy(10,15);
+        cout << " 5. HUY TUYEN XE                                 ";
+         gotoxy(10,16);
+        cout << "-------------------------------------------------";
+         gotoxy(10,17);
+        cout << " 6. DAT VE XE                                    ";
+         gotoxy(10,18);
+        cout << "-------------------------------------------------";
+         gotoxy(10,19);
+        cout << " 7. DIEU CHINH VE                                ";
+         gotoxy(10,20);
+        cout << "-------------------------------------------------";
+         gotoxy(10,21);
+        cout << " 8. XOA VE                                       ";
+         gotoxy(10,22);
+        cout << "-------------------------------------------------";
+         gotoxy(10,23);
+        cout << " 9. DANH SACH VE DA DAT                          ";
+         gotoxy(10,24);
+        cout << "-------------------------------------------------";
+         gotoxy(10,25);
+        cout << " 10. TRO LAI                                        ";
+         gotoxy(10,26);
+        cout << "-------------------------------------------------";
+         gotoxy(10,27);
 
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 1. Add Bus                                      \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 2. View Buses                                   \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 3. Book Ticket                                  \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 4. Edit Ticket                                  \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 5. Cancel Ticket                                \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 6. View Bookings                                \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 7. View Bus Details                             \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 8. Edit Bus                                     \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 9. Delete Bus                                   \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 10. BACK                                        \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n\n";
-
-        cout << "\n\t\t\t\t\t\t\t\t\t\tEnter your choice:-> ";
+        cout << "NHAP LUA CHON:-> ";
 
         cin >> choice;
 
         switch (choice)
         {
         case 1:
-            NodeBus(l,b);
+            l->addBus();
             system("pause");
             break;
 
         case 2:
-            b.showAllBus();
+        	l->ReadFileBus();
+            l->showAllBus();
+            l->Create();
             system("pause");
             break;
 
         case 3:
-            t.bookTicket();
-            system("pause");
-            break;
-
-        case 4:
-            t.editTicket();
-            system("pause");
-            break;
-
-        case 5:
-            t.cancelTicket();
-            system("pause");
-            break;
-
-        case 6:
-            viewBookingsMenu();
-            break;
-
-        case 7:
             b.viewBusDetails();
             system("pause");
             break;
 
-        case 8:
+
+        case 4:
             b.editBus();
             system("pause");
             break;
 
-        case 9:
+
+        case 5:
             b.deleteBus();
             system("pause");
             break;
 
+
+        case 6:
+            t.bookTicket();
+            system("pause");
+            break;
+
+        case 7:
+            t.editTicket();
+            system("pause");
+            break;
+
+        case 8:
+            t.cancelTicket();
+            system("pause");
+            break;
+
+        case 9:
+            viewBookingsMenu();
+            break;
+
+
         case 10:
             system("cls");
             mainMenu();
+            
             break;
-//		case 11:
-//			system("cls");
-//			if(l.head==NULL){
-//				cout<<"\t\t\t\t\t\t\t\t\t\tDon't have bus "<<endl;
-//			}else{
-//				for(p=l.head;p=p->next;p!=NULL){
-//					p->data.showBusDetails();
-//				}
-//			}
-//			
-//			system("pause");
-//			break;
         default:
-            cout << "\n\t\t\t\t\t  Choose valid option!!! \t\t\t\n";
+        	 gotoxy(10,10);
+            cout << "  KHONG HO TRO LUA CHON!!! ";
             system("pause");
             adminMenu();
         }
@@ -308,26 +415,50 @@ void viewBookingsMenu()
     while (1)
     {
         system("cls");
+		setColor(0,6);
+        gotoxy(10,1);
+         cout<< "-------------------------------------------------";
+         gotoxy(10,2);
+         cout<< "||                 DANH SACH VE                ||"; 
+         gotoxy(10,3);
+         cout<< "||                                             ||";
+         gotoxy(10,4);
+         cout<< "-------------------------------------------------" ;
+         gotoxy(10,5);
 
-        printHeading("VIEW BOOKINGS");
 
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 1. By PNR                                      \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 2. By Name                                      \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 3. By Bus                                       \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 4. By Source                                    \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 5. By Destination                               \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 6. All Bookings                                 \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n";
-        cout << "\t\t\t\t\t\t\t\t\t\t 7. BACK                                         \n";
-        cout << "\t\t\t\t\t\t\t\t\t\t-------------------------------------------------\n\n";
+        cout << "-------------------------------------------------";
+        gotoxy(10,7);
+        cout << " 1. MA VE PNR                                    ";
+        gotoxy(10,8);
+        cout << "-------------------------------------------------";
+        gotoxy(10,9);
+        cout << " 2. TEN HANH KHACH                               ";
+        gotoxy(10,10);
+        cout << "-------------------------------------------------";
+        gotoxy(10,11);
+        cout << " 3. SO XE                                        ";
+        gotoxy(10,12);
+        cout << "-------------------------------------------------";
+        gotoxy(10,13);
+        cout << " 4. KHOI HANH                                    ";
+        gotoxy(10,14);
+        cout << "-------------------------------------------------";
+        gotoxy(10,15);
+        cout << " 5. DIEM DEN                                     ";
+        gotoxy(10,16);
+        cout << "-------------------------------------------------";
+        gotoxy(10,17);
+        cout << " 6. TAT CA VE                                    ";
+        gotoxy(10,18);
+        cout << "-------------------------------------------------";
+        gotoxy(10,19);
+        cout << " 7. TRO LAI                                      ";
+        gotoxy(10,20);
+        cout << "-------------------------------------------------";
+        gotoxy(10,21);
 
-        cout << "\n\t\t\t\t\t\t\t\t\t\tEnter your choice:-> ";
+        cout << "NHAP LUA CHON:-> ";
 
         cin >> choice;
 
@@ -365,11 +496,13 @@ void viewBookingsMenu()
 
         case 7:
             system("cls");
+            setColor(0,7);
             adminMenu();
             break;
 
         default:
-            cout << "\n\t\t\t\t\t  Choose valid option!!! \t\t\t\n";
+        	gotoxy(10,10);
+            cout << "  DANG CAT NHAT THEM!!!";
             system("pause");
             viewBookingsMenu();
         }

@@ -2,7 +2,7 @@
 #define BUS_H
 
 #include <iostream>
-
+#include<string.h>
 using namespace std;
 
 // CLASS BUS
